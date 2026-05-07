@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Muhammad Ilman Mughni — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    /* ─────────────────────────────────────────
+       VARIABLES & RESET
+    ───────────────────────────────────────── */
+    :root {
+      --bg:       #0a0d13;
+      --surface:  #111520;
+      --card:     #161b28;
+      --border:   #1f2a3c;
+      --accent:   #00d4ff;
+      --accent2:  #7c3aed;
+      --accent3:  #f97316;
+      --text:     #e8edf5;
+      --muted:    #6b7a99;
+      --dim:      #3a4560;
+      --font-head: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --radius:   12px;
+      --radius-lg:20px;
+      --transition: 0.25s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ─────────────────────────────────────────
+       NOISE OVERLAY
+    ───────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ─────────────────────────────────────────
+       LAYOUT HELPERS
+    ───────────────────────────────────────── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    section {
+      padding: 100px 0;
+    }
+
+    .section-label {
+      font-family: var(--font-head);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .section-label::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .section-title {
+      font-family: var(--font-head);
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      max-width: 560px;
+      margin-bottom: 3rem;
+    }
+
+    /* ─────────────────────────────────────────
+       NAV
+    ───────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.25rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(10,13,19,0.7);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(31,42,60,0.5);
+      transition: var(--transition);
+    }
+
+    .nav-logo {
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color var(--transition);
+      letter-spacing: 0.02em;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      padding: 0.45rem 1.1rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text) !important;
+      transition: all var(--transition) !important;
+    }
+    .nav-cta:hover {
+      border-color: var(--accent) !important;
+      color: var(--accent) !important;
+      background: rgba(0,212,255,0.05);
+    }
+
+    /* ─────────────────────────────────────────
+       HERO
+    ───────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 6rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Background glow blobs */
+    #hero::before, #hero::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+    }
+    #hero::before {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(0,212,255,0.08) 0%, transparent 70%);
+      top: -100px; left: -100px;
+    }
+    #hero::after {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(124,58,237,0.08) 0%, transparent 70%);
+      bottom: -50px; right: -100px;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 4rem;
+      align-items: center;
+      width: 100%;
+      position: relative;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.85rem;
+      background: rgba(0,212,255,0.08);
+      border: 1px solid rgba(0,212,255,0.2);
+      border-radius: 100px;
+      font-size: 0.78rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.5); }
+    }
+
+    .hero-name {
+      font-family: var(--font-head);
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.25rem;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    .hero-name .accent-line {
+      display: block;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-headline {
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 1.75rem;
+      font-weight: 400;
+      animation: fadeUp 0.6s 0.2s ease both;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .hero-headline .dot {
+      width: 4px; height: 4px;
+      background: var(--dim);
+      border-radius: 50%;
+    }
+    .hero-headline .tag {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .hero-desc {
+      max-width: 500px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.4s ease both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      transition: all var(--transition);
+      cursor: pointer;
+      border: none;
+      font-family: var(--font-body);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #000;
+    }
+    .btn-primary:hover {
+      background: #33ddff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,212,255,0.3);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(0,212,255,0.05);
+      transform: translateY(-2px);
+    }
+
+    .hero-socials {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 2.5rem;
+      animation: fadeUp 0.6s 0.5s ease both;
+    }
+    .social-link {
+      width: 38px; height: 38px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition);
+    }
+    .social-link:hover {
+      border-color: var(--accent);
+      background: rgba(0,212,255,0.08);
+      transform: translateY(-2px);
+    }
+    .social-link svg { width: 16px; height: 16px; fill: var(--muted); transition: fill var(--transition); }
+    .social-link:hover svg { fill: var(--accent); }
+
+    /* Avatar */
+    .hero-avatar-wrap {
+      position: relative;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .hero-avatar {
+      width: 280px;
+      height: 340px;
+      border-radius: var(--radius-lg);
+      background: var(--card);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Placeholder avatar with initials */
+    .avatar-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      background: linear-gradient(135deg, var(--surface) 0%, var(--card) 100%);
+    }
+
+    .avatar-initials {
+      font-family: var(--font-head);
+      font-size: 4rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .avatar-hint {
+      font-size: 0.72rem;
+      color: var(--dim);
+      text-align: center;
+      padding: 0 1rem;
+    }
+
+    /* Replace with actual photo */
+    .hero-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-avatar::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,13,19,0.4) 0%, transparent 60%);
+    }
+
+    .avatar-glow {
+      position: absolute;
+      inset: -1px;
+      border-radius: calc(var(--radius-lg) + 1px);
+      background: linear-gradient(135deg, rgba(0,212,255,0.3), rgba(124,58,237,0.3));
+      z-index: -1;
+      filter: blur(16px);
+    }
+
+    .avatar-card {
+      position: absolute;
+      bottom: -16px;
+      left: -24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      backdrop-filter: blur(8px);
+    }
+    .avatar-card-icon {
+      width: 32px; height: 32px;
+      background: rgba(0,212,255,0.1);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+    .avatar-card-text small { display: block; font-size: 0.7rem; color: var(--muted); }
+    .avatar-card-text strong { font-size: 0.82rem; font-family: var(--font-head); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─────────────────────────────────────────
+       ABOUT
+    ───────────────────────────────────────── */
+    #about {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      margin-bottom: 1rem;
+      line-height: 1.85;
+    }
+
+    .about-text p strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .about-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.75rem;
+    }
+
+    .tag-chip {
+      padding: 0.35rem 0.85rem;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      transition: all var(--transition);
+    }
+    .tag-chip:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(0,212,255,0.05);
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: all var(--transition);
+    }
+    .stat-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .stat-number {
+      font-family: var(--font-head);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .about-focus {
+      margin-top: 1rem;
+    }
+    .focus-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      padding: 1rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: all var(--transition);
+    }
+    .focus-item + .focus-item { margin-top: 0.75rem; }
+    .focus-item:hover {
+      border-color: rgba(0,212,255,0.3);
+      background: rgba(0,212,255,0.03);
+    }
+    .focus-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .focus-content strong {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-bottom: 0.15rem;
+    }
+    .focus-content span {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* ─────────────────────────────────────────
+       SKILLS
+    ───────────────────────────────────────── */
+    #skills {}
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .skill-group {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      transition: all var(--transition);
+    }
+    .skill-group:hover {
+      border-color: rgba(0,212,255,0.2);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+    }
+
+    .skill-group-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .skill-group-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+    .skill-group-title {
+      font-family: var(--font-head);
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    .skill-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .skill-pill {
+      padding: 0.3rem 0.7rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.76rem;
+      color: var(--muted);
+      font-weight: 500;
+      transition: all var(--transition);
+    }
+    .skill-pill:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(0,212,255,0.06);
+    }
+
+    /* ─────────────────────────────────────────
+       EXPERIENCE
+    ───────────────────────────────────────── */
+    #experience { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .exp-list { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .exp-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem 2.25rem;
+      position: relative;
+      transition: all var(--transition);
+      overflow: hidden;
+    }
+    .exp-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: linear-gradient(180deg, var(--accent), var(--accent2));
+      border-radius: 2px;
+    }
+    .exp-card:hover {
+      border-color: rgba(0,212,255,0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+    }
+
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .exp-company {
+      font-family: var(--font-head);
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+    .exp-duration {
+      font-size: 0.78rem;
+      color: var(--accent);
+      background: rgba(0,212,255,0.08);
+      border: 1px solid rgba(0,212,255,0.2);
+      padding: 0.25rem 0.75rem;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+    .exp-role {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+    }
+    .exp-role span {
+      color: var(--accent2);
+      font-weight: 500;
+    }
+
+    .exp-points {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .exp-point {
+      display: flex;
+      gap: 0.75rem;
+      font-size: 0.87rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .exp-point::before {
+      content: '▹';
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 0.05rem;
+    }
+    .exp-point strong { color: var(--text); }
+
+    .exp-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ─────────────────────────────────────────
+       PROJECTS
+    ───────────────────────────────────────── */
+    #projects {}
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: all var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+    .project-card:hover {
+      border-color: rgba(0,212,255,0.25);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+    }
+
+    .project-thumb {
+      height: 200px;
+      background: var(--card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .project-card:hover .project-thumb img { transform: scale(1.05); }
+
+    /* Placeholder thumb */
+    .thumb-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+    .thumb-placeholder .thumb-icon { font-size: 2.5rem; }
+    .thumb-placeholder .thumb-label {
+      font-family: var(--font-head);
+      font-size: 0.8rem;
+      color: var(--dim);
+      text-align: center;
+      padding: 0 1rem;
+    }
+
+    .project-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(10,13,19,0.0);
+      transition: background 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+    .project-card:hover .project-overlay { background: rgba(10,13,19,0.6); }
+
+    .overlay-btn {
+      padding: 0.5rem 1.1rem;
+      background: var(--accent);
+      color: #000;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: all 0.3s ease;
+    }
+    .overlay-btn.ghost {
+      background: transparent;
+      border: 1px solid #fff;
+      color: #fff;
+    }
+    .project-card:hover .overlay-btn { opacity: 1; transform: translateY(0); }
+
+    .project-body {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-type {
+      font-size: 0.72rem;
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-name {
+      font-family: var(--font-head);
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      line-height: 1.3;
+    }
+
+    .project-desc {
+      font-size: 0.84rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+      flex: 1;
+    }
+
+    .project-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .stack-tag {
+      padding: 0.2rem 0.6rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    /* ─────────────────────────────────────────
+       CERTIFICATIONS
+    ───────────────────────────────────────── */
+    #certifications { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .cert-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      transition: all var(--transition);
+    }
+    .cert-card:hover {
+      border-color: rgba(0,212,255,0.2);
+      transform: translateY(-2px);
+    }
+    .cert-icon {
+      width: 40px; height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .cert-info strong {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+      line-height: 1.3;
+    }
+    .cert-info span {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    /* ─────────────────────────────────────────
+       CONTACT
+    ───────────────────────────────────────── */
+    #contact { position: relative; overflow: hidden; }
+
+    #contact::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse, rgba(0,212,255,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .contact-inner {
+      text-align: center;
+      position: relative;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .contact-inner .section-label {
+      justify-content: center;
+    }
+    .contact-inner .section-label::before { display: none; }
+
+    .contact-cta {
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 3rem;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.75rem 1.4rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.87rem;
+      transition: all var(--transition);
+    }
+    .contact-link:hover {
+      border-color: var(--accent);
+      background: rgba(0,212,255,0.05);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .contact-link svg { width: 16px; height: 16px; fill: currentColor; }
+
+    /* ─────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────── */
+    footer {
+      padding: 2rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--dim);
+    }
+    footer span { color: var(--accent); }
+
+    /* ─────────────────────────────────────────
+       MOBILE
+    ───────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-avatar-wrap { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .cert-grid { grid-template-columns: repeat(2, 1fr); }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 600px) {
+      .container { padding: 0 1.25rem; }
+      section { padding: 70px 0; }
+      .cert-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════
+       NAV
+  ═══════════════════════════════ -->
+  <nav>
+    <div class="nav-logo">ilman<span>.</span></div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#certifications">Awards</a></li>
+      <li><a href="#contact" class="nav-cta">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ═══════════════════════════════
+       HERO
+  ═══════════════════════════════ -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-content">
+          <div class="hero-badge">Open to new opportunities</div>
+          <h1 class="hero-name">
+            Muhammad<br>
+            <span class="accent-line">Ilman Mughni</span>
+          </h1>
+          <p class="hero-headline">
+            <span class="tag">Data Analyst</span>
+            <span class="dot"></span>
+            <span class="tag">ML Enthusiast</span>
+            <span class="dot"></span>
+            <span class="tag">Mechanical Engineer</span>
+          </p>
+          <p class="hero-desc">
+            Mechanical engineer turned data practitioner — bridging industrial operations and data-driven decision making. Based in Tangerang, Indonesia.
+          </p>
+          <div class="hero-actions">
+            <a href="#projects" class="btn btn-primary">
+              <!-- arrow icon -->
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              View Projects
+            </a>
+            <!-- Replace href with the actual path to your PDF resume -->
+            <a href="Resume_-_Muhammad_Ilman_Mughni.pdf" download class="btn btn-ghost">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              Download CV
+            </a>
+          </div>
+          <div class="hero-socials">
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/in/milmanmughni/" target="_blank" class="social-link" title="LinkedIn">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <!-- GitHub -->
+            <a href="https://github.com/ilmanmughni29" target="_blank" class="social-link" title="GitHub">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            </a>
+            <!-- Email -->
+            <a href="mailto:ilmanmughni29@gmail.com" class="social-link" title="Email">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Profile photo area -->
+        <div class="hero-avatar-wrap">
+          <div class="avatar-glow"></div>
+          <div class="hero-avatar">
+            <!--
+              TO ADD YOUR PHOTO:
+              Replace the div below with:
+              <img src="assets/photo.jpg" alt="Muhammad Ilman Mughni" />
+            -->
+            <div class="avatar-placeholder">
+              <div class="avatar-initials">MIM</div>
+              <div class="avatar-hint">Add photo.jpg<br>to /assets folder</div>
+            </div>
+          </div>
+          <div class="avatar-card">
+            <div class="avatar-card-icon">📍</div>
+            <div class="avatar-card-text">
+              <small>Located in</small>
+              <strong>Tangerang, ID</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════
+       ABOUT
+  ═══════════════════════════════ -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text">
+          <p class="section-label">About Me</p>
+          <h2 class="section-title">Engineer at heart,<br>analyst by practice.</h2>
+          <p>
+            I'm a <strong>Mechanical Engineering graduate from Universitas Indonesia</strong> (GPA 3.72) with hands-on experience in industrial maintenance, commissioning of a copper smelter facility, and CFD research.
+          </p>
+          <p>
+            My career pivot into data analytics stems from a genuine curiosity about how <strong>data-driven insight can optimise engineering systems</strong> — whether that's predicting equipment failure or modelling customer behaviour.
+          </p>
+          <p>
+            I bring a rare combination of <strong>domain knowledge in heavy industry</strong> and <strong>modern data science tooling</strong>, enabling me to communicate technical findings to both engineers and business stakeholders.
+          </p>
+          <div class="about-tags">
+            <span class="tag-chip">Mechanical Engineering</span>
+            <span class="tag-chip">Copper Smelter Ops</span>
+            <span class="tag-chip">Data Analytics</span>
+            <span class="tag-chip">Machine Learning</span>
+            <span class="tag-chip">Business Intelligence</span>
+            <span class="tag-chip">Dashboard Design</span>
+          </div>
+        </div>
+        <div>
+          <div class="about-stats">
+            <div class="stat-card">
+              <div class="stat-number">3.72</div>
+              <div class="stat-label">GPA — Universitas Indonesia</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">200+</div>
+              <div class="stat-label">Assets managed in smelter commissioning</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">1</div>
+              <div class="stat-label">Patent — E-bike conversion system</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">5+</div>
+              <div class="stat-label">National awards & competition finals</div>
+            </div>
+          </div>
+
+          <div class="about-focus" style="margin-top:1.25rem">
+            <div class="focus-item">
+              <div class="focus-icon" style="background:rgba(0,212,255,0.1)">⚙️</div>
+              <div class="focus-content">
+                <strong>Industrial Engineering</strong>
+                <span>Maintenance, commissioning, rotating equipment, pressure vessels</span>
+              </div>
+            </div>
+            <div class="focus-item">
+              <div class="focus-icon" style="background:rgba(124,58,237,0.1)">📊</div>
+              <div class="focus-content">
+                <strong>Data Science & ML</strong>
+                <span>Predictive modelling, EDA, classification, Streamlit apps</span>
+              </div>
+            </div>
+            <div class="focus-item">
+              <div class="focus-icon" style="background:rgba(249,115,22,0.1)">📈</div>
+              <div class="focus-content">
+                <strong>Business Analytics</strong>
+                <span>Dashboards, KPI reporting, Power BI, Tableau, BigQuery</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════
+       SKILLS
+  ═══════════════════════════════ -->
+  <section id="skills">
+    <div class="container">
+      <p class="section-label">Expertise</p>
+      <h2 class="section-title">Skills & Tools</h2>
+      <p class="section-desc">A cross-disciplinary toolkit spanning industrial engineering, data science, and analytics.</p>
+
+      <div class="skills-grid">
+        <!-- Engineering -->
+        <div class="skill-group">
+          <div class="skill-group-header">
+            <div class="skill-group-icon" style="background:rgba(0,212,255,0.1)">🔧</div>
+            <span class="skill-group-title">Engineering</span>
+          </div>
+          <div class="skill-pills">
+            <span class="skill-pill">Preventive Maintenance</span>
+            <span class="skill-pill">Pump Systems</span>
+            <span class="skill-pill">Commissioning</span>
+            <span class="skill-pill">Root Cause Analysis</span>
+            <span class="skill-pill">SAP S/4HANA</span>
+            <span class="skill-pill">Hydrotest / Pneumatic Test</span>
+            <span class="skill-pill">Criticality Analysis</span>
+            <span class="skill-pill">API 650 / 653</span>
+            <span class="skill-pill">ASME BPVC Sec. VIII</span>
+          </div>
+        </div>
+
+        <!-- Data Science -->
+        <div class="skill-group">
+          <div class="skill-group-header">
+            <div class="skill-group-icon" style="background:rgba(124,58,237,0.1)">🧠</div>
+            <span class="skill-group-title">Data Science / Analytics</span>
+          </div>
+          <div class="skill-pills">
+            <span class="skill-pill">Python</span>
+            <span class="skill-pill">Jupyter Notebook</span>
+            <span class="skill-pill">Machine Learning</span>
+            <span class="skill-pill">Tableau</span>
+            <span class="skill-pill">SQL</span>
+            <span class="skill-pill">Streamlit</span>
+            <span class="skill-pill">BigQuery</span>
+            <span class="skill-pill">ETL</span>
+            <span class="skill-pill">Git / GitHub</span>
+            <span class="skill-pill">Power BI</span>
+            <span class="skill-pill">Microsoft Excel</span>
+          </div>
+        </div>
+
+        <!-- Engineering Software -->
+        <div class="skill-group">
+          <div class="skill-group-header">
+            <div class="skill-group-icon" style="background:rgba(249,115,22,0.1)">🖥️</div>
+            <span class="skill-group-title">Engineering Software</span>
+          </div>
+          <div class="skill-pills">
+            <span class="skill-pill">ANSYS Fluent</span>
+            <span class="skill-pill">Autodesk Inventor</span>
+            <span class="skill-pill">SolidWorks</span>
+            <span class="skill-pill">Aspen HYSYS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════
+       EXPERIENCE
+  ═══════════════════════════════ -->
+  <section id="experience">
+    <div class="container">
+      <p class="section-label">Career</p>
+      <h2 class="section-title">Work Experience</h2>
+      <p class="section-desc">Industrial roles that shaped my engineering foundation and problem-solving approach.</p>
+
+      <div class="exp-list">
+
+        <!-- AMMAN -->
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-company">AMMAN Mineral Industri</div>
+              <div class="exp-role">Supervisor – FSF, FCF, Cooling Water, Granulation &nbsp;|&nbsp; <span>Sumbawa, Indonesia</span></div>
+            </div>
+            <span class="exp-duration">Jan 2024 – Present</span>
+          </div>
+          <div class="exp-points">
+            <div class="exp-point">Conducted <strong>criticality analysis</strong> on 200+ assets in FSF & FCF plants — categorising equipment by production, safety, and environmental impact to prioritise maintenance efforts.</div>
+            <div class="exp-point">Prepared and managed <strong>preventive & corrective maintenance SOPs</strong>, spare parts planning, and scheduled maintenance to ensure full readiness for smelter commissioning.</div>
+            <div class="exp-point">Managed maintenance <strong>Work Orders via SAP S/4HANA</strong>, ensuring accurate equipment records and traceable corrective actions for future resolution.</div>
+            <div class="exp-point">Performed <strong>leak tests (hydrotest & pneumatic)</strong> on Natural Gas, Cooling Water, Nitrogen, and Oxygen lines; executed equipment testing for pumps, fans, and blowers.</div>
+            <div class="exp-point">Designed a <strong>flux (CaO) blower system</strong> to convey lime from truck to silo — scoped requirements, coordinated fabrication, and validated performance.</div>
+            <div class="exp-point">Monitored maintenance expenses and <strong>controlled operational budget</strong>, coordinating across departments for permit-to-work and shutdown planning.</div>
+          </div>
+          <div class="exp-tags">
+            <span class="skill-pill">SAP S/4HANA</span>
+            <span class="skill-pill">Preventive Maintenance</span>
+            <span class="skill-pill">Commissioning</span>
+            <span class="skill-pill">Root Cause Analysis</span>
+            <span class="skill-pill">Hydrotest</span>
+            <span class="skill-pill">Budget Control</span>
+          </div>
+        </div>
+
+        <!-- TPPI -->
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-company">Trans Pacific Petrochemical Indotama (PT TPPI)</div>
+              <div class="exp-role">Mechanical Engineer – On Job Training &nbsp;|&nbsp; <span>Tuban, Indonesia</span></div>
+            </div>
+            <span class="exp-duration">Aug 2019 – Sep 2019</span>
+          </div>
+          <div class="exp-points">
+            <div class="exp-point">Troubleshot and <strong>overhauled caustic circulation pump 204-P-001B</strong> in the platforming area — diagnosed root cause of failure and restored unit to operational condition.</div>
+            <div class="exp-point">Performed <strong>failure mode analysis</strong> and proposed preventive measures to reduce recurrence, contributing to improved uptime in the platforming unit.</div>
+          </div>
+          <div class="exp-tags">
+            <span class="skill-pill">Pump Overhaul</span>
+            <span class="skill-pill">Failure Analysis</span>
+            <span class="skill-pill">Petrochemical Operations</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════
+       PROJECTS
+  ═══════════════════════════════ -->
+  <section id="projects">
+    <div class="container">
+      <p class="section-label">Portfolio</p>
+      <h2 class="section-title">Featured Projects</h2>
+      <p class="section-desc">Data science & analytics projects tackling real-world business problems.</p>
+
+      <div class="projects-grid">
+
+        <!-- PROJECT 1: Telco Churn -->
+        <div class="project-card">
+          <div class="project-thumb" style="background:linear-gradient(135deg,#0f1a2e,#1a2340)">
+            <!--
+              TO ADD SCREENSHOT:
+              Replace the div below with:
+              <img src="assets/telco-churn.png" alt="Telco Churn" />
+            -->
+            <div class="thumb-placeholder">
+              <div class="thumb-icon">📱</div>
+              <div class="thumb-label">Add screenshot to /assets/telco-churn.png</div>
+            </div>
+            <div class="project-overlay">
+              <a href="https://github.com/ilmanmughni29" target="_blank" class="overlay-btn">GitHub</a>
+              <!-- <a href="#" target="_blank" class="overlay-btn ghost">Live Demo</a> -->
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-type">Machine Learning · Classification</div>
+            <div class="project-name">Telco Customer Churn Prediction</div>
+            <div class="project-desc">
+              Built an end-to-end ML pipeline to predict customer churn for a telecom provider. Performed EDA, feature engineering, and compared multiple classifiers to identify the best-performing model. Deployed as an interactive Streamlit application.
+            </div>
+            <div class="project-stack">
+              <span class="stack-tag">Python</span>
+              <span class="stack-tag">Scikit-learn</span>
+              <span class="stack-tag">Streamlit</span>
+              <span class="stack-tag">Pandas</span>
+              <span class="stack-tag">Matplotlib</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROJECT 2: Airbnb Bangkok -->
+        <div class="project-card">
+          <div class="project-thumb" style="background:linear-gradient(135deg,#1a0f2e,#2a1040)">
+            <div class="thumb-placeholder">
+              <div class="thumb-icon">🏠</div>
+              <div class="thumb-label">Add screenshot to /assets/airbnb-bangkok.png</div>
+            </div>
+            <div class="project-overlay">
+              <a href="https://github.com/ilmanmughni29" target="_blank" class="overlay-btn">GitHub</a>
+              <!-- <a href="#" target="_blank" class="overlay-btn ghost">Tableau</a> -->
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-type">EDA · Data Visualisation</div>
+            <div class="project-name">Airbnb Bangkok — EDA & Tableau Dashboard</div>
+            <div class="project-desc">
+              Conducted exploratory data analysis on Airbnb listings in Bangkok to uncover pricing patterns, neighbourhood trends, and host behaviour. Built an interactive Tableau dashboard for business stakeholders to filter and explore insights.
+            </div>
+            <div class="project-stack">
+              <span class="stack-tag">Python</span>
+              <span class="stack-tag">Tableau</span>
+              <span class="stack-tag">Pandas</span>
+              <span class="stack-tag">Seaborn</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROJECT 3: Car Insurance Fraud -->
+        <div class="project-card">
+          <div class="project-thumb" style="background:linear-gradient(135deg,#1a1a0f,#2a2a10)">
+            <div class="thumb-placeholder">
+              <div class="thumb-icon">🚗</div>
+              <div class="thumb-label">Add screenshot to /assets/car-fraud.png</div>
+            </div>
+            <div class="project-overlay">
+              <a href="https://github.com/ilmanmughni29" target="_blank" class="overlay-btn">GitHub</a>
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-type">Machine Learning · Fraud Detection</div>
+            <div class="project-name">Car Insurance Fraud Prediction</div>
+            <div class="project-desc">
+              Developed a fraud detection model for car insurance claims using imbalanced classification techniques (SMOTE, class weighting). Focused on maximising recall to minimise missed fraud cases while maintaining acceptable precision.
+            </div>
+            <div class="project-stack">
+              <span class="stack-tag">Python</span>
+              <span class="stack-tag">Scikit-learn</span>
+              <span class="stack-tag">SMOTE</span>
+              <span class="stack-tag">XGBoost</span>
+              <span class="stack-tag">Jupyter</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROJECT 4: Python CRUD -->
+        <div class="project-card">
+          <div class="project-thumb" style="background:linear-gradient(135deg,#0f1a0f,#10261a)">
+            <div class="thumb-placeholder">
+              <div class="thumb-icon">🍽️</div>
+              <div class="thumb-label">Add screenshot to /assets/crud-menu.png</div>
+            </div>
+            <div class="project-overlay">
+              <a href="https://github.com/ilmanmughni29" target="_blank" class="overlay-btn">GitHub</a>
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-type">Python · CLI Application</div>
+            <div class="project-name">Python CRUD — Food Menu Manager</div>
+            <div class="project-desc">
+              A command-line CRUD application for managing a restaurant food menu. Supports full Create, Read, Update, and Delete operations on menu items with clean terminal UI and input validation.
+            </div>
+            <div class="project-stack">
+              <span class="stack-tag">Python</span>
+              <span class="stack-tag">CLI</span>
+              <span class="stack-tag">OOP</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════
+       CERTIFICATIONS & AWARDS
+  ═══════════════════════════════ -->
+  <section id="certifications">
+    <div class="container">
+      <p class="section-label">Recognition</p>
+      <h2 class="section-title">Certifications & Awards</h2>
+      <p class="section-desc">Formal recognition across data science, engineering, and research competitions.</p>
+
+      <div class="cert-grid">
+        <div class="cert-card">
+          <div class="cert-icon" style="background:rgba(0,212,255,0.1)">🎓</div>
+          <div class="cert-info">
+            <strong>Purwadhika Data Science & Machine Learning</strong>
+            <span>Full Bootcamp — Data Science Track</span>
+          </div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-icon" style="background:rgba(249,115,22,0.1)">🏆</div>
+          <div class="cert-info">
+            <strong>Tanoto Student Research Award 2021</strong>
+            <span>Top 9 — Appropriate Technology Category</span>
+          </div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-icon" style="background:rgba(124,58,237,0.1)">🎤</div>
+          <div class="cert-info">
+            <strong>Best Presenter — INSITEF 2022</strong>
+            <span>3rd International Science & Technology Fair</span>
+          </div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-icon" style="background:rgba(0,212,255,0.1)">⚡</div>
+          <div class="cert-info">
+            <strong>PLN Innovation & Competition 2021</strong>
+            <span>Finalist — E-bike Category</span>
+          </div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-icon" style="background:rgba(249,115,22,0.1)">🏅</div>
+          <div class="cert-info">
+            <strong>BRI Peduli Creation 2021</strong>
+            <span>Finalist</span>
+          </div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-icon" style="background:rgba(0,212,255,0.1)">📋</div>
+          <div class="cert-info">
+            <strong>ITS Petroleum Integrated Days 2021</strong>
+            <span>5th Place — Case Study Competition</span>
+          </div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-icon" style="background:rgba(124,58,237,0.1)">🔬</div>
+          <div class="cert-info">
+            <strong>Patent — S00202111212</strong>
+            <span>High Torque Self-Rechargeable E-Bike with Knockdown System</span>
+          </div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-icon" style="background:rgba(0,212,255,0.1)">📊</div>
+          <div class="cert-info">
+            <strong>Excel Skills for Business: Essentials</strong>
+            <span>Coursera · Verified Certificate</span>
+          </div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-icon" style="background:rgba(249,115,22,0.1)">📈</div>
+          <div class="cert-info">
+            <strong>Data Analytics Mini Course</strong>
+            <span>RevoU · Verified Certificate</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════
+       CONTACT
+  ═══════════════════════════════ -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-inner">
+        <p class="section-label">Get In Touch</p>
+        <h2 class="section-title">Let's work together.</h2>
+        <p class="contact-cta">
+          Whether you have a data challenge, a role to fill, or just want to connect — I'm always open to a conversation.
+        </p>
+
+        <div class="contact-links">
+          <a href="mailto:ilmanmughni29@gmail.com" class="contact-link">
+            <svg viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg>
+            ilmanmughni29@gmail.com
+          </a>
+          <a href="tel:+628131958867" class="contact-link">
+            <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            +62 813 1958 8671
+          </a>
+          <a href="https://www.linkedin.com/in/milmanmughni/" target="_blank" class="contact-link">
+            <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+          <a href="https://github.com/ilmanmughni29" target="_blank" class="contact-link">
+            <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            GitHub
+          </a>
+        </div>
+
+        <a href="Resume_-_Muhammad_Ilman_Mughni.pdf" download class="btn btn-primary" style="margin:0 auto;display:inline-flex">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          Download Full Resume
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════
+       FOOTER
+  ═══════════════════════════════ -->
+  <footer>
+    <p>Designed & built by <span>Muhammad Ilman Mughni</span> · 2025</p>
+  </footer>
+
+</body>
+</html>
