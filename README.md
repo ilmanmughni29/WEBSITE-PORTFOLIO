@@ -11,7 +11,8 @@ I bring a combination of hands-on industrial experience and modern data science 
 
 
 ## Contact
-Whether you have a data challenge, a role to fill, or just want to connect — I'm always open to a conversation.
-email: ilmanmughni29@gmail.com
-LinkedIn: https://www.linkedin.com/in/milmanmughni/
-Github: https://github.com/ilmanmughni29
+
+Open to opportunities in Data Analytics, Business Consulting, and Operations Consulting — always excited to connect, solve problems, and create impactful solutions through data-driven thinking.
+* email: ilmanmughni29@gmail.com
+* LinkedIn: https://www.linkedin.com/in/milmanmughni/
+* Github: https://github.com/ilmanmughni29
